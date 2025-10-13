@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Scratch AMF Download</title>
+	</head>
+	<body style="background-color: #000000; color: white;">
+
+		<h3>Generate a prismatic (polygonal extrusion) .AMF file:</h3>
+
+		<p>diameter: <input type="number" id="diameter" value="50.0"></p>
+		<p>height: <input type="number" id="height" value="8.0"></p>
+		<p>number of sides: <input type="number" id="sides" value="30.0"></p>
+
+
+		<button id="dlButton">download .AMF</button>
+
+		<script>
+			document.getElementById('dlButton').addEventListener('click', function() {
+
+				let vertexID=0;
+				const d=parseFloat(document.getElementById('diameter').value);
+				const h=parseFloat(document.getElementById('height').value);
+				const N=Math.ceil(parseFloat(document.getElementById('sides').value));
+
+				// header
+				let fileContent = '<?xml version="1.0" encoding="UTF-8"?>\n<amf unit="millimeter" version="1.1">\n\t<object id="1">\n\t\t<mesh>\n\t\t\t<vertices>';
+				// center points on both layers
+				fileContent += "\n\t\t\t\t<vertex><coordinates><x>"+0.0+"</x><y>"+0.0+"</y><z>"+0.0+"</z></coordinates></vertex><!-- vertex #"+(vertexID++)+"-->"
+				fileContent += "\n\t\t\t\t<vertex><coordinates><x>"+0.0+"</x><y>"+0.0+"</y><z>"+h+"</z></coordinates></vertex><!-- vertex #"+(vertexID++)+"-->"
+				// loop thru vertices on lower layer
+				for (let i=0;i<N;i++){
+					let x=d*Math.cos(i/N*(2*Math.PI));
+					let y=d*Math.sin(i/N*(2*Math.PI));
+					let z=0.0*h;
+					fileContent += "\n\t\t\t\t<vertex><coordinates><x>"+x+"</x><y>"+y+"</y><z>"+z+"</z></coordinates></vertex><!-- vertex #"+vertexID+"-->"
+					vertexID++;
+				}
+				// loop thru vertices on upper layer
+				for (let i=0;i<N;i++){
+					let x=d*Math.cos(i/N*(2*Math.PI));
+					let y=d*Math.sin(i/N*(2*Math.PI));
+					let z=1.0*h;
+					fileContent += "\n\t\t\t\t<vertex><coordinates><x>"+x+"</x><y>"+y+"</y><z>"+z+"</z></coordinates></vertex><!-- vertex #"+vertexID+"-->"
+					vertexID++;
+				}
+
+				fileContent += "\n\t\t\t</vertices>\n\t\t\t<volume>"
+
+				// now the triangles on the bottom
+				for (let i=0;i<(N-1);i++){
+					fileContent += "\n\t\t\t\t<triangle><v1>"+(i+2)+"</v1><v2>"+0+"</v2><v3>"+(i+3)+"</v3></triangle>"
+				}
+				fileContent += "\n\t\t\t\t<triangle><v1>"+(N+1)+"</v1><v2>"+0+"</v2><v3>"+(2)+"</v3></triangle>"
+				// now the triangles on the top
+				for (let i=0;i<(N-1);i++){
+					fileContent += "\n\t\t\t\t<triangle><v1>"+(i+3+N)+"</v1><v2>"+1+"</v2><v3>"+(i+2+N)+"</v3></triangle>"
+				}
+				fileContent += "\n\t\t\t\t<triangle><v1>"+(N+2)+"</v1><v2>"+1+"</v2><v3>"+(2*N+1)+"</v3></triangle>"
+
+				// now the sides
+				for (let i=0;i<(N-1);i++){
+					fileContent += "\n\t\t\t\t<triangle><v1>"+(i+2)+"</v1><v2>"+(i+3)+"</v2><v3>"+(i+2+N)+"</v3></triangle>"
+					fileContent += "\n\t\t\t\t<triangle><v1>"+(i+3)+"</v1><v2>"+(i+3+N)+"</v2><v3>"+(i+2+N)+"</v3></triangle>"
+				}
+				fileContent += "\n\t\t\t\t<triangle><v1>"+(1+N)+"</v1><v2>"+(2)+"</v2><v3>"+(2*N+1)+"</v3></triangle>"
+				fileContent += "\n\t\t\t\t<triangle><v1>"+(2)+"</v1><v2>"+(2+N)+"</v2><v3>"+(2*N+1)+"</v3></triangle>"
+
+				// footer
+				fileContent += "\n\t\t\t</volume>\n\t\t</mesh>\n\t</object>\n</amf>"
+
+				const fileName = d+'x'+h+'_'+N+'-prism.amf';
+				const blob = new Blob([fileContent], { type: 'text/plain' });
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.style.display = 'none';
+				a.href = url;
+				a.download = fileName; 
+				document.body.appendChild(a);
+				a.click(); 
+
+				URL.revokeObjectURL(url);
+				document.body.removeChild(a);
+			});
+		</script>
+
+	</body>
+</html>
