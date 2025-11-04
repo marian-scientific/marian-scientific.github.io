@@ -1,13 +1,21 @@
 #!/bin/bash
+
+# index file
 echo "<html><head><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Marian Scientific Journal Entries</h1>" > "index.html"
-for INIFILE in src/*.ini; do
+
+FILE_PATTERN="src/*.ini"
+files=($FILE_PATTERN)
+for ((i=${#files[@]}-1; i>=0; i--)); do
+	INIFILE="${files[i]}"
 	source $INIFILE
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
+	
 	# append to index file
-	echo "<h3><a href=\"${NO_EXT}.html\">$NO_EXIT</a>$date: $author: $project_ID ($project)</h3>" >> "index.html"
+	echo "<h3><a href=\"${NO_EXT}.html\">${NO_EXT}</a>$date: $author: $project_ID ($project)</h3> \
+	<p>$content</p><hr>" >> "index.html"
 
 	# standalone file
 	echo "<html><head><link rel=\"stylesheet\" \
