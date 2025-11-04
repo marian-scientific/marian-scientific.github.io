@@ -12,9 +12,9 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	source $INIFILE
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
-	
+
 	# append to index file
-	echo "<h3><a href=\"${NO_EXT}.html\">${NO_EXT}</a>$date: $author: $project_ID ($project)</h3> \
+	echo "<h3><a href=\"${NO_EXT}.html\">Entry ${NO_EXT} ($date):</a> $author: $project_ID ($project)</h3> \
 	<p>$content</p><hr>" >> "index.html"
 
 	# standalone file
