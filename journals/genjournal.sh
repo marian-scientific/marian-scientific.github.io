@@ -29,7 +29,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	<p>$content</p><hr>" >> "authors/${author_str}.html"
 
 	# append to index file
-	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> $author - $project_ID ($project)</h3> \
+	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - $project_ID ($project)</h3> \
 	<p>$content</p><hr>" >> "index.html"
 
 	# standalone file
@@ -37,7 +37,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 		href=\"style.css\"></head><body> \
 		<h1>Journal Entry #${NO_EXT}</h1> \
 		<h2>$project_ID - $project</h2> \
-		<h3>$date, $author, Marian Scientific, AMDG</h3> \
+		<h3>$date, <a href=\"authors/${author_str}.html\">$author</a>, Marian Scientific, AMDG</h3> \
 		<p>$content</p></body></html>" > "${NO_EXT}.html"
 
 done
