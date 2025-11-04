@@ -18,7 +18,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Commit and Push Changes
-        run :
+        run : |
           if [[ -n "$(git status --porcelain)" ]]; then
            echo "Changes detected. Pushing..."
            git add .
