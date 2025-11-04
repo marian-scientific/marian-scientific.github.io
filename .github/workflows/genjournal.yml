@@ -11,5 +11,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Execute Shell Script
         run: 
-          chmod +x /journals/genjournal.sh
+          chmod +x ./journals/genjournal.sh
           ./journals/genjournal.sh
