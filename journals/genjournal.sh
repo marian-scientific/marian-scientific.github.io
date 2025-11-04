@@ -17,15 +17,14 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 
 	# author file
 	author_str="${author// /_}"
-	FILE="/path/to/your/file.txt"
-	if [ ! -e "authors/${author_str}" ]; then
+	if [ ! -e "authors/${author_str}.html" ]; then
 		# create author file
 		echo "<html><head><link rel=\"stylesheet\" \
-		href=\"style.css\"></head><body> \
+		href=\"../style.css\"></head><body> \
 		<h1>$author Journal Entries, AMDG</h1>" > "authors/${author_str}.html"
 	fi
 	# append to author file
-	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> $project_ID ($project)</h3> \
+	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> $project_ID ($project)</h3> \
 	<p>$content</p><hr>" >> "authors/${author_str}.html"
 
 	# append to index file
