@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf authors
+rm -rf authors/*
 
 # index file
 echo "<html><head><link rel=\"stylesheet\" \
