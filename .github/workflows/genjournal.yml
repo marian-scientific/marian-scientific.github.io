@@ -19,7 +19,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Commit and Push Changes
         run :
-          if [[ -n $(git status --porcelain)" ]]; then
+          if [[ -n "$(git status --porcelain)" ]]; then
            echo "Changes detected. Pushing..."
            git add .
            git commit -m "Automatically re-generated journal entries"
