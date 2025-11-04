@@ -10,6 +10,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Execute Shell Script
-        run: 
+        run: |
           chmod +x ./journals/genjournal.sh
           ./journals/genjournal.sh
+      - name: Configure Git User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Commit and Push Changes
+        run :
+          if [[ -n $(git status --porcelain)" ]]; then
+           echo "Changes detected. Pushing..."
+           git add .
+           git commit -m "Automatically re-generated journal entries"
+           git push
+          fi
