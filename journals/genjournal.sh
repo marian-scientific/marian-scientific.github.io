@@ -1,5 +1,5 @@
 #!/bin/bash
-for INIFILE in *.ini; do
+for INIFILE in src/*.ini; do
 	source $INIFILE
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
