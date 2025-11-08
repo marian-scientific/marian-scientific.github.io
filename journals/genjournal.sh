@@ -12,6 +12,9 @@ files=($FILE_PATTERN)
 for ((i=${#files[@]}-1; i>=0; i--)); do
 	INIFILE="${files[i]}"
 	source $INIFILE
+
+    author=$(echo -e "${author}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
+
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
 
