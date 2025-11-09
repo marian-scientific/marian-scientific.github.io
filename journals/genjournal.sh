@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf authors/*
+rm -rf authors/* projects/*
 
 # index file
 echo "<html><head><link rel=\"stylesheet\" \
@@ -32,6 +32,18 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	# append to author file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> $project_ID ($project)</h3> \
 	<p>$content</p><hr>" >> "authors/${author_str}.html"
+
+	# project file
+	project_ID_str="${project_ID// /_}"
+	if [ ! -e "authors/${project_ID_str}.html" ]; then
+		# create project file
+		echo "<html><head><link rel=\"stylesheet\" \
+		href=\"../style.css\"></head><body> \
+		<h1>$project_ID ($project) Journal Entries, $author, AMDG</h1>" > "projects/${project_ID_str}.html"
+	fi
+	# append to project file
+	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a></h3> \
+	<p>$content</p><hr>" >> "projects/${project_ID_str}.html"
 
 	# append to index file
 	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - $project_ID ($project)</h3> \
