@@ -35,7 +35,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 
 	# project file
 	project_ID_str="${project_ID// /_}"
-	if [ ! -e "authors/${project_ID_str}.html" ]; then
+	if [ ! -e "projects/${project_ID_str}.html" ]; then
 		# create project file
 		echo "<html><head><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
@@ -46,14 +46,14 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	<p>$content</p><hr>" >> "projects/${project_ID_str}.html"
 
 	# append to index file
-	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - $project_ID ($project)</h3> \
+	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
 	<p>$content</p><hr>" >> "index.html"
 
 	# standalone file
 	echo "<html><head><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Journal Entry #${NO_EXT}</h1> \
-		<h2>$project_ID - $project</h2> \
+		<h2><a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h2> \
 		<h3>$date, <a href=\"authors/${author_str}.html\">$author</a>, Marian Scientific, AMDG</h3> \
 		<p>$content</p></body></html>" > "${NO_EXT}.html"
 
