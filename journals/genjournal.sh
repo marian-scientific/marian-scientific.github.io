@@ -14,6 +14,9 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	source $INIFILE
 
     author=$(echo -e "${author}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
+	date=$(echo -e "${date}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
+	project=$(echo -e "${project}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
+	project_ID=$(echo -e "${project_ID}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
