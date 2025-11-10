@@ -30,7 +30,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 		<h1>$author Journal Entries, AMDG</h1>" > "authors/${author_str}.html"
 	fi
 	# append to author file
-	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> $project_ID ($project)</h3> \
+	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
 	<p>$content</p><hr>" >> "authors/${author_str}.html"
 
 	# project file
@@ -39,7 +39,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 		# create project file
 		echo "<html><head><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
-		<h1>$project_ID ($project) Journal Entries, $author, AMDG</h1>" > "projects/${project_ID_str}.html"
+		<h1>$project_ID ($project) Journal Entries, <a href=\"authors/${author_str}.html\">$author</a>, AMDG</h1>" > "projects/${project_ID_str}.html"
 	fi
 	# append to project file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a></h3> \
