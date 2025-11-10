@@ -21,8 +21,10 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
 
-	# author file
 	author_str="${author// /_}"
+	project_ID_str="${project_ID// /_}"
+
+	# author file
 	if [ ! -e "authors/${author_str}.html" ]; then
 		# create author file
 		echo "<html><head><link rel=\"stylesheet\" \
@@ -34,7 +36,6 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	<p>$content</p><hr>" >> "authors/${author_str}.html"
 
 	# project file
-	project_ID_str="${project_ID// /_}"
 	if [ ! -e "projects/${project_ID_str}.html" ]; then
 		# create project file
 		echo "<html><head><link rel=\"stylesheet\" \
