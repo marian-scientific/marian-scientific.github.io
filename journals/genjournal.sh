@@ -37,15 +37,9 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	project=$(echo -e "${project}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 	project_ID=$(echo -e "${project_ID}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 
+	content=$(echo -e "$content" | sed -E 's/\[IMG (.*)\]/<img src=\"https://marian-scientific.github.io/journals/res/thumbs/=\"\1"\/>/g')
 
-
-
-# 2. Use 'sed' with an updated regex to capture anything after 'IMG ' and before ']'
-	content=$(echo -e "$content" | sed -E 's/\[IMG (.*)\]/<img src="https://marian-scientific.github.io/journals/res/thumbs/="\1"\/>/g')
-
-# 3. Print the new string
-echo "$NEW_STRING"
-
+	echo "$content"
 
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
