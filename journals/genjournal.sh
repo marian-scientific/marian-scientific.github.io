@@ -50,7 +50,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	# author file
 	if [ ! -e "authors/${author_str}.html" ]; then
 		# create author file
-		echo "<html><head><link rel=\"stylesheet\" \
+		echo "<html><head><title>$author_str</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$author Journal Entries, AMDG</h1>" > "authors/${author_str}.html"
 	fi
@@ -61,7 +61,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	# project file
 	if [ ! -e "projects/${project_ID_str}.html" ]; then
 		# create project file
-		echo "<html><head><link rel=\"stylesheet\" \
+		echo "<html><head><title>$project_ID</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$project_ID ($project) Journal Entries, <a href=\"../authors/${author_str}.html\">$author</a>, AMDG</h1>" > "projects/${project_ID_str}.html"
 	fi
@@ -74,7 +74,7 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	<p>$content</p><hr>" >> "index.html"
 
 	# standalone file
-	echo "<html><head><link rel=\"stylesheet\" \
+	echo "<html><head><title>$NO_EXT</title><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Journal Entry #${NO_EXT}</h1> \
 		<h2><a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h2> \
