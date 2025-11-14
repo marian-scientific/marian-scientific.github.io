@@ -7,6 +7,25 @@ echo "<html><head><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Marian Scientific Journal Entries</h1>" > "index.html"
 
+
+IMG_PATTERN="res/*.jpg"
+images=($IMG_PATTERN)
+for ((i=${#images[@]}-1; i>=0; i--)); do
+	IMG="${images[i]}"
+	FILENAME=$(basename "$IMG")
+	NO_EXT="${FILENAME%.*}"
+	convert $IMG -resize 800x "${NO_EXT}_thumb.jpg"
+done
+
+IMG_PATTERN="res/*.png"
+images=($IMG_PATTERN)
+for ((i=${#images[@]}-1; i>=0; i--)); do
+	IMG="${images[i]}"
+	FILENAME=$(basename "$IMG")
+	NO_EXT="${FILENAME%.*}"
+	convert $IMG -resize 800x "${NO_EXT}_thumb.png"
+done
+
 FILE_PATTERN="src/*.ini"
 files=($FILE_PATTERN)
 for ((i=${#files[@]}-1; i>=0; i--)); do
