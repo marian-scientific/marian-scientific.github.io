@@ -1,12 +1,12 @@
 #!/bin/bash
 
 rm -rf authors/* projects/*
+sudo apt install -y imagemagick
 
 # index file
 echo "<html><head><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Marian Scientific Journal Entries</h1>" > "index.html"
-
 
 IMG_PATTERN="res/*.jpg"
 images=($IMG_PATTERN)
