@@ -14,7 +14,7 @@ for ((i=${#images[@]}-1; i>=0; i--)); do
 	IMG="${images[i]}"
 	FILENAME=$(basename "$IMG")
 	NO_EXT="${FILENAME%.*}"
-	convert $IMG -resize 800x "res/thumbs/${NO_EXT}_thumb.jpg"
+	convert $IMG -resize 800x "res/thumbs/${NO_EXT}.jpg"
 done
 
 IMG_PATTERN="res/*.png"
@@ -23,7 +23,7 @@ for ((i=${#images[@]}-1; i>=0; i--)); do
 	IMG="${images[i]}"
 	FILENAME=$(basename "$IMG")
 	NO_EXT="${FILENAME%.*}"
-	convert $IMG -resize 800x "res/thumbs/${NO_EXT}_thumb.png"
+	convert $IMG -resize 800x "res/thumbs/${NO_EXT}.png"
 done
 
 FILE_PATTERN="src/*.ini"
@@ -36,6 +36,16 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	date=$(echo -e "${date}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 	project=$(echo -e "${project}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 	project_ID=$(echo -e "${project_ID}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
+
+
+
+
+# 2. Use 'sed' with an updated regex to capture anything after 'IMG ' and before ']'
+	content=$(echo -e "$content" | sed -E 's/\[IMG (.*)\]/<img src="https://marian-scientific.github.io/journals/res/thumbs/="\1"\/>/g')
+
+# 3. Print the new string
+echo "$NEW_STRING"
+
 
 	FILENAME=$(basename "$INIFILE")
 	NO_EXT="${FILENAME%.*}"
