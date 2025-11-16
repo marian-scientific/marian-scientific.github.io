@@ -37,8 +37,9 @@ for ((i=${#files[@]}-1; i>=0; i--)); do
 	project=$(echo -e "${project}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 	project_ID=$(echo -e "${project_ID}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 
-	content=$(echo -e "$content" | sed -E 's|\[IMG ([^\]]*)\]|<br/><a href=\"https://marian-scientific.github.io/journals/res/\1\"><center><img src=\"https://marian-scientific.github.io/journals/res/thumbs/\1"/></center></a>|g')
+	#content=$(echo -e "$content" | sed -E 's|\[IMG ([^\]]*)\]|<br/><a href=\"https://marian-scientific.github.io/journals/res/\1\"><center><img src=\"https://marian-scientific.github.io/journals/res/thumbs/\1"/></center></a>|g')
 
+	content=$(echo -e "$content" | sed -E 's/\[IMG \([^]]*\)\]/<br/><a href=\"https://marian-scientific.github.io/journals/res/\1\"><center><img src=\"https://marian-scientific.github.io/journals/res/thumbs/\1"/></center></a>/g'
 	# echo "$content"
 
 	FILENAME=$(basename "$INIFILE")
