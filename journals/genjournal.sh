@@ -28,7 +28,7 @@ done
 
 FILE_PATTERN="src/*.ini"
 files=($FILE_PATTERN)
-for ((i=0;i++;${#files[@]}-1)); do
+for ((i=0;i<${#files[@]};i++)); do
 	INIFILE="${files[i]}"
 	source $INIFILE
 
