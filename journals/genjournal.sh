@@ -28,7 +28,7 @@ done
 
 FILE_PATTERN="src/*.ini"
 files=($FILE_PATTERN)
-for ((i=0;i<${#files[@]};i++)); do
+for ((i=${#files[@]}-1;i>=0;i--)); do
 	INIFILE="${files[i]}"
 	source $INIFILE
 
@@ -63,10 +63,10 @@ for ((i=0;i<${#files[@]};i++)); do
 		# create project file
 		echo "<html><head><title>Project #$project_ID</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
-		<h1>$project_ID ($project) Journal Entries, <a href=\"../authors/${author_str}.html\">$author</a>, AMDG</h1>" > "projects/${project_ID_str}.html"
+		<h1>$project_ID ($project) Journal Entries</h1>" > "projects/${project_ID_str}.html"
 	fi
 	# append to project file
-	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a></h3> \
+	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"../authors/${author_str}.html\">$author</a></h3> \
 	<p>$content</p><hr>" >> "projects/${project_ID_str}.html"
 
 	# append to index file
