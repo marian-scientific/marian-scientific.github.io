@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf authors/* projects/*
+rm -rf authors/* projects/* catalog/*
 sudo apt install -y imagemagick
 
 # index file
@@ -26,6 +26,11 @@ for ((i=${#images[@]}-1; i>=0; i--)); do
 	convert $IMG -resize 800x "res/thumbs/${NO_EXT}.png"
 done
 
+index_file_10_post_string=""
+num_index_posts=0;
+
+CURRENT_MONTH_KEY=""
+
 FILE_PATTERN="src/*.ini"
 files=($FILE_PATTERN)
 for ((i=${#files[@]}-1;i>=0;i--)); do
@@ -46,6 +51,42 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 	author_str="${author// /_}"
 	project_ID_str="${project_ID// /_}"
+
+	MONTH_KEY=$(echo "$date" | cut -d'-' -f1,2)
+
+	# Check for a new month group
+	if [ "$MONTH_KEY" != "$CURRENT_MONTH_KEY" ]; then
+		# Close previous group (if not the first one)
+		if [ -n "$CURRENT_MONTH_KEY" ]; then
+			echo "</div>" >> "$OUTPUT_FILE" # Close .month-group
+		fi
+
+		CURRENT_MONTH_KEY="$MONTH_KEY"
+		
+		READABLE_MONTH=$(date -d "${MONTH_KEY}-01" +"%B %Y" 2>/dev/null)
+
+		# catalog index file
+		if [ ! -e "catalog/index.html" ]; then
+			# create catalog index file
+			echo "<html><head><title>Journal Entry Catalog</title><link rel=\"stylesheet\" \
+			href=\"../style.css\"></head><body> \
+			<h1>Journal Entry Catalog</h1>" > "catalog/index.html"
+		fi
+		# append to catalog index file
+		echo "<h3><a href=\"${CURRENT_MONTH_KEY}.html\">${CURRENT_MONTH_KEY}</a><hr>" >> "catalog/index.html"
+
+	fi
+
+	# month file
+	if [ ! -e "catalog/${CURRENT_MONTH_KEY}.html" ]; then
+		# create month file
+		echo "<html><head><title>$READABLE_MONTH Entries</title><link rel=\"stylesheet\" \
+		href=\"../style.css\"></head><body> \
+		<h1>$READABLE_MONTH Journal Entries, AMDG</h1>" > "catalog/${CURRENT_MONTH_KEY}.html"
+	fi
+	# append to month file
+	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
+	<p>$content</p><hr>" >> "authors/${author_str}.html"
 
 	# author file
 	if [ ! -e "authors/${author_str}.html" ]; then
@@ -70,9 +111,12 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 	<p>$content</p><hr>" >> "projects/${project_ID_str}.html"
 
 	# append to index file
-	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
-	<p>$content</p><hr>" >> "index.html"
-
+	if [ $num_index_posts -lt 10 ]; then
+		index_file_10_post_string="${index_file_10_post_string}<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
+		<p>$content</p><hr>"
+		num_index_posts=$((num_index_posts + 1))
+	fi
+	
 	# standalone file
 	echo "<html><head><title>Entry #$NO_EXT</title><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
@@ -83,4 +127,4 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 done
 
-echo "</body></html>" >> "index.html"
+echo "${index_file_10_post_string}</body></html>" >> "index.html"
