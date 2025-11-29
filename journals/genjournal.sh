@@ -28,6 +28,8 @@ done
 
 index_file_10_post_string=""
 num_index_posts=0;
+author_list=""
+project_list=""
 
 CURRENT_MONTH_KEY=""
 
@@ -68,12 +70,12 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		# catalog index file
 		if [ ! -e "catalog/index.html" ]; then
 			# create catalog index file
-			echo "<html><head><title>Journal Entry Catalog</title><link rel=\"stylesheet\" \
+			echo "<html><head><title>Journal Entry Archive</title><link rel=\"stylesheet\" \
 			href=\"../style.css\"></head><body> \
-			<h1>Journal Entry Catalog</h1>" > "catalog/index.html"
+			<h1>Journal Entry Archive</h1>" > "catalog/index.html"
 		fi
 		# append to catalog index file
-		echo "<h3><a href=\"${CURRENT_MONTH_KEY}.html\">${CURRENT_MONTH_KEY}</a><hr>" >> "catalog/index.html"
+		echo "<h3><a href=\"${CURRENT_MONTH_KEY}.html\">${READABLE_MONTH}</a><hr>" >> "catalog/index.html"
 
 	fi
 
@@ -82,11 +84,11 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		# create month file
 		echo "<html><head><title>$READABLE_MONTH Entries</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
-		<h1>$READABLE_MONTH Journal Entries, AMDG</h1>" > "catalog/${CURRENT_MONTH_KEY}.html"
+		<h1>$READABLE_MONTH Journal Entries</h1>" > "catalog/${CURRENT_MONTH_KEY}.html"
 	fi
 	# append to month file
 	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
-	<p>$content</p><hr>" >> "authors/${author_str}.html"
+	<p>$content</p><hr>" >> "catalog/${CURRENT_MONTH_KEY}.html"
 
 	# author file
 	if [ ! -e "authors/${author_str}.html" ]; then
@@ -94,6 +96,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		echo "<html><head><title>$author Entries</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$author Journal Entries, AMDG</h1>" > "authors/${author_str}.html"
+		author_list="${author_list}<h3><a href=\"authors/${author_str}.html\">$author</a></h3>"
 	fi
 	# append to author file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href="../projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
@@ -105,6 +108,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		echo "<html><head><title>Project #$project_ID</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$project_ID ($project) Journal Entries</h1>" > "projects/${project_ID_str}.html"
+		project_list="${project_list}<h3><a href=\"projects/${project_ID_str}.html\">$project</a></h3>"
 	fi
 	# append to project file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"../authors/${author_str}.html\">$author</a></h3> \
@@ -114,9 +118,10 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 	if [ $num_index_posts -lt 10 ]; then
 		index_file_10_post_string="${index_file_10_post_string}<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
 		<p>$content</p><hr>"
-		num_index_posts=$((num_index_posts + 1))
 	fi
-	
+
+	num_index_posts=$((num_index_posts + 1))
+
 	# standalone file
 	echo "<html><head><title>Entry #$NO_EXT</title><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
@@ -127,4 +132,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 done
 
-echo "${index_file_10_post_string}</body></html>" >> "index.html"
+echo "<hr><h2>Projects</h2>${project_list} \
+	<hr><h2>Contributors</h2>${author_list} \
+	<hr><h2>Recent Journal Entries (<a href=\"catalog/index.html\">click here for full ${num_index_posts}-post archive</a>)</h2> \
+	${index_file_10_post_string}</body></html>" >> "index.html"
