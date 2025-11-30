@@ -103,7 +103,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		if [ $num_index_posts -eq 0 ]; then
 			author_list="${author_list}<a href=\"authors/${author_str}.html\">$author</a>"
 		else
-			author_list=",  ${author_list}<a href=\"authors/${author_str}.html\">$author</a>"
+			author_list="${author_list},  <a href=\"authors/${author_str}.html\">$author</a>"
 		fi
 	fi
 	# append to author file
@@ -119,7 +119,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		if [ $num_index_posts -eq 0 ]; then
 			project_list="${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
 		else
-			project_list=",  ${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
+			project_list="${project_list},  <a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
 		fi
 	fi
 	# append to project file
@@ -148,5 +148,5 @@ echo "${month_list} (${CURRENT_MONTH_ENTRIES} entries)</a></h3><hr>" >> "catalog
 
 echo "<h2>Projects</h2><h3>${project_list}</h3> \
 	<hr><h2>Contributors</h2><h3>${author_list}</h3> \
-	<hr><h2>Recent Journal Entries</h2>   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
+	<hr><h2>Recent Journal Entries   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
 	${index_file_10_post_string}</body></html>" >> "index.html"
