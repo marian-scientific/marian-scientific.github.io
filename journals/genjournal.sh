@@ -75,7 +75,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		if [ $num_index_posts -eq 0 ]; then
 			month_list="${month_list}<h3><a href=\"${CURRENT_MONTH_KEY}.html\">${READABLE_MONTH}"
 		else
-			month_list="${month_list}(${CURRENT_MONTH_ENTRIES} entries)</a></h3><hr><h3><a href=\"${CURRENT_MONTH_KEY}.html\">${READABLE_MONTH}"
+			month_list="${month_list} (${CURRENT_MONTH_ENTRIES} entries)</a></h3><hr><h3><a href=\"${CURRENT_MONTH_KEY}.html\">${READABLE_MONTH}"
 		fi
 
 		CURRENT_MONTH_ENTRIES=0
@@ -100,7 +100,11 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		echo "<html><head><title>$author Entries</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$author Journal Entries, AMDG</h1>" > "authors/${author_str}.html"
-		author_list="${author_list}<a href=\"authors/${author_str}.html\">$author</a>  "
+		if [ $num_index_posts -eq 0 ]; then
+			author_list="${author_list}<a href=\"authors/${author_str}.html\">$author</a>"
+		else
+			author_list=",  ${author_list}<a href=\"authors/${author_str}.html\">$author</a>"
+		fi
 	fi
 	# append to author file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href="../projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
@@ -112,7 +116,11 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		echo "<html><head><title>Project #$project_ID</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$project_ID ($project) Journal Entries</h1>" > "projects/${project_ID_str}.html"
-		project_list="${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>  "
+		if [ $num_index_posts -eq 0 ]; then
+			project_list="${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
+		else
+			project_list=",  ${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
+		fi
 	fi
 	# append to project file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"../authors/${author_str}.html\">$author</a></h3> \
@@ -136,9 +144,9 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 done
 
-echo "${month_list}" >> "catalog/index.html"
+echo "${month_list} (${CURRENT_MONTH_ENTRIES} entries)</a></h3><hr>" >> "catalog/index.html"
 
-echo "<hr><h2>Projects</h2><h3>${project_list}</h3> \
+echo "<h2>Projects</h2><h3>${project_list}</h3> \
 	<hr><h2>Contributors</h2><h3>${author_list}</h3> \
-	<hr><h2>Recent Journal Entries</h2><h3>(<a href=\"catalog/index.html\">click here for full ${num_index_posts}-post archive</a>)</h3> \
+	<hr><h2>Recent Journal Entries</h2>   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
 	${index_file_10_post_string}</body></html>" >> "index.html"
