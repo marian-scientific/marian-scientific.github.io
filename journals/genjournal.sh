@@ -90,7 +90,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		<h1>$READABLE_MONTH Journal Entries</h1>" > "catalog/${CURRENT_MONTH_KEY}.html"
 	fi
 	# append to month file
-	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
+	echo "<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"../authors/${author_str}.html\">$author</a> - <a href="../projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
 	<p>$content</p><hr>" >> "catalog/${CURRENT_MONTH_KEY}.html"
 	CURRENT_MONTH_ENTRIES=$((CURRENT_MONTH_ENTRIES + 1))
 
