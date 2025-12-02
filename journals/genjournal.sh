@@ -146,7 +146,7 @@ done
 
 echo "${month_list} (${CURRENT_MONTH_ENTRIES} entries)</a></h3><hr>" >> "catalog/index.html"
 
-echo "<h2>Projects</h2><h3>${project_list}</h3> \
-	<hr><h2>Contributors</h2><h3>${author_list}</h3> \
-	<hr><h2>Recent Journal Entries   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
+echo "<h2 style=\"color: yellow;\">Projects</h2><h3>${project_list}</h3> \
+	<hr><h2 style=\"color: yellow;\">Contributors</h2><h3>${author_list}</h3> \
+	<hr><h2 style=\"color: yellow;\">Recent Journal Entries   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
 	${index_file_10_post_string}</body></html>" >> "index.html"
