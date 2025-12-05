@@ -1,5 +1,7 @@
 #!/bin/bash
 
+START_TIME=$(date +%s.%N)
+
 rm -rf authors/* projects/* catalog/*
 sudo apt install -y imagemagick
 
@@ -34,6 +36,9 @@ month_list=""
 
 CURRENT_MONTH_KEY=""
 
+declare -A POST_COUNTS
+
+
 FILE_PATTERN="src/*.ini"
 files=($FILE_PATTERN)
 for ((i=${#files[@]}-1;i>=0;i--)); do
@@ -46,7 +51,6 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 	project_ID=$(echo -e "${project_ID}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '\r')
 
 	content=$(echo "$content" | sed -E 's/\[IMG ([^]]*)\]/<br\/><a href="https:\/\/marian-scientific.github.io\/journals\/res\/\1"><center><img src="https:\/\/marian-scientific.github.io\/journals\/res\/thumbs\/\1"\/><\/center><\/a>/g')
-	
 	echo "$content"
 
 	FILENAME=$(basename "$INIFILE")
@@ -54,6 +58,8 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 	author_str="${author// /_}"
 	project_ID_str="${project_ID// /_}"
+
+	POST_COUNTS["$author"]=$(( ${POST_COUNTS["$author"]:-0} + 1 ))
 
 	MONTH_KEY=$(echo "$date" | cut -d'-' -f1,2)
 
@@ -144,9 +150,24 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 done
 
+author_list2=""
+separator=""
+
+for guy in "${!POST_COUNTS[@]}"; do
+    count=${POST_COUNTS["$guy"]}
+	guy_str="${guy// /_}"
+	author_list2="${author_list2}${separator}<a href=\"authors/${guy_str}.html\">$guy ($count entries)</a>"
+	separator=", "
+done
+
 echo "${month_list} (${CURRENT_MONTH_ENTRIES} entries)</a></h3><hr>" >> "catalog/index.html"
 
 echo "<h2 style=\"color: yellow;\">Projects</h2><h3>${project_list}</h3> \
-	<hr><h2 style=\"color: yellow;\">Contributors</h2><h3>${author_list}</h3> \
+	<hr><h2 style=\"color: yellow;\">Contributors</h2><h3>${author_list2}</h3> \
 	<hr><h2 style=\"color: yellow;\">Recent Journal Entries   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
 	${index_file_10_post_string}</body></html>" >> "index.html"
+
+END_TIME=$(date +%s.%N)
+DURATION=$(echo "$END_TIME - $START_TIME" | awk '{printf "%.3f", $1 - $2}')
+
+echo "<p>Journal entries processed in $DURATION seconds on $(date)</body></html>" >> "index.html"
