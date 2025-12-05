@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START_TIME=$(date +%s.%N)
+START_TIME=$(date +%s)
 
 rm -rf authors/* projects/* catalog/*
 sudo apt install -y imagemagick
@@ -67,7 +67,6 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 		CURRENT_MONTH_KEY="$MONTH_KEY"
 		
-		
 		READABLE_MONTH=$(date -d "${MONTH_KEY}-01" +"%B %Y" 2>/dev/null)
 
 		# catalog index file
@@ -123,9 +122,9 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		href=\"../style.css\"></head><body> \
 		<h1>$project_ID ($project) Journal Entries</h1>" > "projects/${project_ID_str}.html"
 		if [ $num_index_posts -eq 0 ]; then
-			project_list="${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
+			project_list="${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a>"
 		else
-			project_list="${project_list},  <a href=\"projects/${project_ID_str}.html\">$project_ID ($project)</a>"
+			project_list="${project_list},  <a href=\"projects/${project_ID_str}.html\">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a>"
 		fi
 	fi
 	# append to project file
@@ -167,7 +166,7 @@ echo "<h2 style=\"color: yellow;\">Projects</h2><h3>${project_list}</h3> \
 	<hr><h2 style=\"color: yellow;\">Recent Journal Entries   (<a href=\"catalog/index.html\">full ${num_index_posts}-post archive</a>)</h2> \
 	${index_file_10_post_string}</body></html>" >> "index.html"
 
-END_TIME=$(date +%s.%N)
-DURATION=$(echo "$END_TIME - $START_TIME" | awk '{printf "%.3f", $1 - $2}')
+END_TIME=$(date +%s)
+DURATION=$(( $END_TIME - $START_TIME))
 
-echo "<p>Journal entries processed in $DURATION seconds on $(date)</body></html>" >> "index.html"
+echo "<p>Journal entries processed in $DURATION seconds on $(date)</p></body></html>" >> "index.html"
