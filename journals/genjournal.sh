@@ -105,11 +105,11 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		echo "<html><head><title>$author Entries</title><link rel=\"stylesheet\" \
 		href=\"../style.css\"></head><body> \
 		<h1>$author Journal Entries, AMDG</h1>" > "authors/${author_str}.html"
-		if [ $num_index_posts -eq 0 ]; then
-			author_list="${author_list}<a href=\"authors/${author_str}.html\">$author</a>"
-		else
-			author_list="${author_list},  <a href=\"authors/${author_str}.html\">$author</a>"
-		fi
+	#	if [ $num_index_posts -eq 0 ]; then
+	#		author_list="${author_list}<a href=\"authors/${author_str}.html\">$author</a>"
+	#	else
+	#		author_list="${author_list},  <a href=\"authors/${author_str}.html\">$author</a>"
+	#	fi
 	fi
 	# append to author file
 	echo "<h3><a href=\"../${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href="../projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
@@ -133,7 +133,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 
 	# append to index file
 	if [ $num_index_posts -lt 10 ]; then
-		index_file_10_post_string="${index_file_10_post_string}<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h3> \
+		index_file_10_post_string="${index_file_10_post_string}<h3><a href=\"${NO_EXT}.html\">#${NO_EXT} ($date):</a> <a href=\"authors/${author_str}.html\">$author</a> - <a href="projects/${project_ID_str}.html">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a></h3> \
 		<p>$content</p><hr>"
 	fi
 
@@ -143,7 +143,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 	echo "<html><head><title>Entry #$NO_EXT</title><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Journal Entry #${NO_EXT}</h1> \
-		<h2><a href="projects/${project_ID_str}.html">$project_ID ($project)</a></h2> \
+		<h2><a href="projects/${project_ID_str}.html">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a></h2> \
 		<h3>$date, <a href=\"authors/${author_str}.html\">$author</a>, Marian Scientific, AMDG</h3> \
 		<p>$content</p></body></html>" > "${NO_EXT}.html"
 
@@ -155,7 +155,7 @@ separator=""
 for guy in "${!POST_COUNTS[@]}"; do
     count=${POST_COUNTS["$guy"]}
 	guy_str="${guy// /_}"
-	author_list2="${author_list2}${separator}<a href=\"authors/${guy_str}.html\">$guy ($count entries)</a>"
+	author_list2="${author_list2}${separator}<a href=\"authors/${guy_str}.html\">$guy <span style=\"font-size: 0.7em\">($count entries)</span></a>"
 	separator=", "
 done
 
