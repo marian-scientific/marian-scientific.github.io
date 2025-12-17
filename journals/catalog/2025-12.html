@@ -1,4 +1,31 @@
 <html><head><title>December 2025 Entries</title><link rel="stylesheet" 		href="../style.css"></head><body> 		<h1>December 2025 Journal Entries</h1>
+<h3><a href="../0059.html">#0059 (2025-12-17):</a> <a href="../authors/Anthony_Remark.html">Anthony Remark</a> - <a href=../projects/03009.html>03009 (MM1 Minute Hand)</a></h3> 	<p>A few days ago, there was a lot of work done. The circuit was constructed on a breadboard. <br/><a href="https://marian-scientific.github.io/journals/res/0059_A.jpg"><center><img src="https://marian-scientific.github.io/journals/res/thumbs/0059_A.jpg"/></center></a> </br>
+
+The Team constructed the encoder circuit and it uses a 74LS00 to interface with the stm32 bluepill. The bluepill interfaces with the Max7219. The Max7219 is wired for 2 seven 
+segment displays that are supposed to disply the position of the minute hand. </br>
+
+Below are plans of the corresponding position of the EN16AB encoder to the expected output of the Max7219. The Binary column was my reading of the outputs of the Encoder.
+The Green column is the properly written binary output wit the Leftmost bit treated as the Most Significant Bit. 
+<br/><a href="https://marian-scientific.github.io/journals/res/0059_B.jpg"><center><img src="https://marian-scientific.github.io/journals/res/thumbs/0059_B.jpg"/></center></a>  </br>
+
+The issue of the 12 position encoder is that the binary outputs do not follow an obvious chronological pattern, so An array was constructed to extract the necessary data.
+
+<br/><a href="https://marian-scientific.github.io/journals/res/0059_C.jpg"><center><img src="https://marian-scientific.github.io/journals/res/thumbs/0059_C.jpg"/></center></a> </br>
+
+We conventionally discribe the sequence of binary numbers as following an increasing number pattern. But the Encoder doesn't output that. So We use an
+array to organize whatever is given from the green column (the output of the encoder corresponding to the position) to something that the code can use. 
+This 'something' is a workable sequence of numbers to tell us what position the encoder is at. </br>
+
+Below is the myArray array we use. We use a sequence of binary numbers to correspond to decimal numbers. For example, the 0010 number is supposed to be the 3rd
+number but we have to use it as the 1st number because the EN16AB datasheet says this is the first position output. I decided to follow that convention. Another
+example is that 1100 is not the 10th number in binary counting but it is the 10th position output on our chosen encoder, so we set the content of that array to 
+be 10 which corresponds to the 10 position of the encoder.
+
+<br/><a href="https://marian-scientific.github.io/journals/res/0059_D.jpg"><center><img src="https://marian-scientific.github.io/journals/res/thumbs/0059_D.jpg"/></center></a> </br>
+
+Last image is the notes on how the data from myArray will be used and the operations that will be done to feed the Max7219 the proper value to the appropriate address.
+
+<br/><a href="https://marian-scientific.github.io/journals/res/0059_E.jpg"><center><img src="https://marian-scientific.github.io/journals/res/thumbs/0059_E.jpg"/></center></a> </p><hr>
 <h3><a href="../0058.html">#0058 (2025-12-16):</a> <a href="../authors/Matt_DiPalma.html">Matt DiPalma</a> - <a href=../projects/12001.html>12001 (RP2040_AVR)</a></h3> 	<p>Soldered pins to the RP2040-Zero board for preliminary breadboard tests. Got control of the built-in RGB LED working over PIO (very interesting and powerful) and began working the ICSP algorithm. <a href="https://github.com/marian-scientific/projects/tree/Christ/12001%20-%20RP2040%20AVR%20PCB">Link to top-level project directory.</a>.</p><hr>
 <h3><a href="../0057.html">#0057 (2025-12-15):</a> <a href="../authors/Matt_DiPalma.html">Matt DiPalma</a> - <a href=../projects/12001.html>12001 (RP2040_AVR)</a></h3> 	<p>Launched short-term investigation into developing a RP2040-based programmer for AVR ICSP-capable chips, especially the Atmega328P. After internal discussions 2025-12-14, both of these chips seem to be the best avenues for future electronic project development. <a href="https://github.com/marian-scientific/projects/tree/Christ/12001%20-%20RP2040%20AVR%20PCB">Completed first three preliminary tasks</a> establishing a functional Atmega328P and RP2040-zero toolchain to complete the remainder of the investigation.</p><hr>
 <h3><a href="../0056.html">#0056 (2025-12-15):</a> <a href="../authors/Matt_DiPalma.html">Matt DiPalma</a> - <a href=../projects/03007.html>03007 (AFSM)</a></h3> 	<p>Received 6 of 6 (no extras) 03007-001 stepper coil-driver PCBs from OSH Park. They arrived in 15 days. The communication from the company was far better than DKRed. The board quality is decent, and the price is comparable. Boards (purple cheapest and default option) do come with jagged edges where they are broken from a larger PCB platter. I do prefer them to DKRed. <br/><a href="https://marian-scientific.github.io/journals/res/0056.jpg"><center><img src="https://marian-scientific.github.io/journals/res/thumbs/0056.jpg"/></center></a></p><hr>
