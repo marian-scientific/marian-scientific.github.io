@@ -143,7 +143,7 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 	echo "<html><head><title>Entry #$NO_EXT</title><link rel=\"stylesheet\" \
 		href=\"style.css\"></head><body> \
 		<h1>Journal Entry #${NO_EXT}</h1> \
-		<h2><a href="projects/${project_ID_str}.html">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a></h2> \
+		<h2>Project: <a href="projects/${project_ID_str}.html">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a></h2> \
 		<h3>$date, <a href=\"authors/${author_str}.html\">$author</a>, Marian Scientific, AMDG</h3> \
 		<p>$content</p></body></html>" > "${NO_EXT}.html"
 
