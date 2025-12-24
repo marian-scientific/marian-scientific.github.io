@@ -122,9 +122,9 @@ for ((i=${#files[@]}-1;i>=0;i--)); do
 		href=\"../style.css\"></head><body> \
 		<h1>$project_ID ($project) Journal Entries</h1>" > "projects/${project_ID_str}.html"
 		if [ $num_index_posts -eq 0 ]; then
-			project_list="${project_list}<a href=\"projects/${project_ID_str}.html\">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a>"
+			project_list="${project_list}</br><a href=\"projects/${project_ID_str}.html\">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a>"
 		else
-			project_list="${project_list},  <a href=\"projects/${project_ID_str}.html\">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a>"
+			project_list="${project_list},</br><a href=\"projects/${project_ID_str}.html\">$project_ID <span style=\"font-size: 0.7em\">($project)</span></a>"
 		fi
 	fi
 	# append to project file
